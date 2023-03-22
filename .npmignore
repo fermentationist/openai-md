@@ -1,0 +1,10 @@
+.env
+src
+tsconfig.json
+.eslintrc
+.gitignore
+.eslintignore
+.prettierrc
+.mocharc.json
+node_modules
+test

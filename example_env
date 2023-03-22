@@ -1,0 +1,5 @@
+# (required) API key needed to generate content using the OpenAI API
+OPENAI_API_KEY = 
+
+# (required) setting necessary to allow Mocha (test runner) to work with ESModules and TypeScript
+TS_NODE_COMPILER_OPTIONS={"module":"commonjs"}

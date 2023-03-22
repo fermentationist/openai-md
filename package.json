@@ -1,0 +1,41 @@
+{
+  "name": "openai-markdown-generator",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Node CLI app that uses the OpenAI API to create markdown content.",
+  "main": "lib/index.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "lint": "eslint",
+    "format": "prettier --write \"src/**/*.+(js|ts|json)\"",
+    "build": "tsc",
+    "test": "mocha './test/**/*.test.*'"
+  },
+  "author": "Dennis Hodges",
+  "keywords": [
+    "openai",
+    "markdown",
+    "node",
+    "cli",
+    "typescript"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "openai": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.15.3",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint": "^8.36.0",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2"
+  }
+}

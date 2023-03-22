@@ -1,0 +1,19 @@
+# build destination 
+/lib
+
+# temp (output) folder
+/temp
+
+# dependencies
+node_modules
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+
+# env files
+.env
+.env*.local
