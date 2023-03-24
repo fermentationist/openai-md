@@ -2,7 +2,7 @@
   "name": "openai-md",
   "type": "module",
   "version": "0.0.1",
-  "description": "Node app (with CLI) that uses the OpenAI API to create markdown content.",
+  "description": "A Node.js (Typescript) package/CLI app that uses the OpenAI API to generate content in the form of markdown files.",
   "main": "lib/index.js",
   "bin": "lib/cli.js",
   "files": [
@@ -35,7 +35,7 @@
     "cli",
     "typescript"
   ],
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
     "openai": "^3.2.1",
