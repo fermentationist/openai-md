@@ -16,15 +16,23 @@ export const DEFAULT_POLICED_CATEGORIES = [
 ];
 
 // initialize OpenAI API
-const configuration = new Configuration({
+let configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
+let openai = new OpenAIApi(configuration);
 
 // getModeration returns a promise that resolves to the response from the OpenAI API createModeration endpoint
 export async function getModeration(
-  input: string
+  input: string,
+  apiKey?: string
 ): Promise<CreateModerationResponseResultsInner> {
+  if (apiKey) {
+    // if an API key is passed in, use it
+    configuration = new Configuration({
+      apiKey,
+    });
+    openai = new OpenAIApi(configuration);
+  }
   const response = await openai.createModeration({ input });
   const results = response?.data?.results?.[0];
   return results;
@@ -33,9 +41,12 @@ export async function getModeration(
 // failsModeration returns the category of violation (a string) if the input fails moderation, or false if it passes
 export async function failsModeration(
   input: string,
-  policedCategories = DEFAULT_POLICED_CATEGORIES
+  {
+    policedCategories = DEFAULT_POLICED_CATEGORIES,
+    apiKey,
+  }: { policedCategories?: string[]; apiKey?: string } = {}
 ) {
-  const { categories } = await getModeration(input);
+  const { categories } = await getModeration(input, apiKey);
   for (const category in categories) {
     const isInViolation =
       categories[category as keyof typeof categories] &&
@@ -50,10 +61,25 @@ export async function failsModeration(
 // getCompletion returns a promise that resolves to the response from the OpenAI API createCompletion endpoint
 export async function getCompletion(
   prompt: string,
-  temperature = 0.95,
-  maxTokens?: number,
-  model?: string
+  {
+    temperature = 0.95,
+    maxTokens,
+    model,
+    apiKey,
+  }: {
+    temperature?: number;
+    maxTokens?: number;
+    model?: string;
+    apiKey?: string;
+  } = {}
 ) {
+  if (apiKey) {
+    // if an API key is passed in, use it
+    configuration = new Configuration({
+      apiKey,
+    });
+    openai = new OpenAIApi(configuration);
+  }
   try {
     console.log("Getting completion from OpenAI API...");
     const wordCount = prompt.split(/[\s,.-]/).length;
@@ -66,7 +92,7 @@ export async function getCompletion(
       max_tokens: maxTokens ?? difference,
       temperature,
     });
-    console.log("GPT model used:", response?.data?.model);
+    console.log("\nGPT model used:", response?.data?.model);
     console.log("Total tokens:", response?.data?.usage?.total_tokens);
     return response?.data?.choices && response.data.choices[0].text;
   } catch (error) {

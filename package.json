@@ -1,9 +1,10 @@
 {
-  "name": "openai-markdown-generator",
+  "name": "openai-md",
   "type": "module",
   "version": "0.0.1",
-  "description": "Node CLI app that uses the OpenAI API to create markdown content.",
+  "description": "Node app (with CLI) that uses the OpenAI API to create markdown content.",
   "main": "lib/index.js",
+  "bin": "lib/cli.js",
   "files": [
     "lib/**/*"
   ],
@@ -12,9 +13,21 @@
     "lint": "eslint",
     "format": "prettier --write \"src/**/*.+(js|ts|json)\"",
     "build": "tsc",
-    "test": "mocha './test/**/*.test.*'"
+    "test": "mocha './test/**/*.test.*'",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run lint && npm run test",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
-  "author": "Dennis Hodges",
+  "author": {
+    "name": "Dennis Hodges",
+    "email": "fermentationist@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fermentationist/openai-md.git"
+  },
   "keywords": [
     "openai",
     "markdown",
@@ -25,11 +38,13 @@
   "license": "MIT",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "openai": "^3.2.1"
+    "openai": "^3.2.1",
+    "yargs": "github:yargs/yargs"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.1",
     "@types/node": "^18.15.3",
+    "@types/yargs": "^17.0.23",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
     "eslint": "^8.36.0",

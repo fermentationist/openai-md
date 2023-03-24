@@ -8,3 +8,4 @@ tsconfig.json
 .mocharc.json
 node_modules
 test
+temp
