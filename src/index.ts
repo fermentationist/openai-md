@@ -64,13 +64,12 @@ async function getMarkdownContent(
 ) {
   console.log("Generating markdown content. This may take a minute...");
   spinner.start();
-  const completion = await openAi.getCompletion(
-    prompt,
-    {temperature,
+  const completion = await openAi.getCompletion(prompt, {
+    temperature,
     maxTokens,
     model,
-    apiKey}
-  );
+    apiKey,
+  });
   spinner.stop();
   return completion as string;
 }
@@ -198,7 +197,10 @@ export async function generateMarkdownAndSaveToFile(
     model,
     apiKey,
   });
-  const nameOfFile = filename === undefined || filename === "" ? getFilename(markdownContent, filenameKey): filename;
+  const nameOfFile =
+    filename === undefined || filename === ""
+      ? getFilename(markdownContent, filenameKey)
+      : filename;
   const dir = outputDirectory || OUTPUT_DIRECTORY;
   writeToFile(dir, nameOfFile, markdownContent);
   console.log("Markdown saved to:", `${dir}/${nameOfFile}.md`);

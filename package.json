@@ -1,7 +1,7 @@
 {
   "name": "openai-md",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A Node.js (Typescript) package/CLI app that uses the OpenAI API to generate content in the form of markdown files.",
   "main": "lib/index.js",
   "bin": "lib/cli.js",

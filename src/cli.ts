@@ -137,7 +137,8 @@ const main = async (): Promise<any> => {
     )) ||
       OUTPUT_DIRECTORY);
 
-  if (filename === undefined || filename === "") { // if no filename is provided
+  if (filename === undefined || filename === "") {
+    // if no filename is provided
     // prompt the user for the filename
     let filenameQuery = `Filename [default: use current date]: `;
     if (frontMatterToGenerate.includes("title") || "title" in meta) {
@@ -145,7 +146,7 @@ const main = async (): Promise<any> => {
     } else if (frontMatterToGenerate.includes("date") || "date" in meta) {
       filenameQuery = `Filename [default: use date]: `;
     }
-    filename = (await readlineAsync(filenameQuery));
+    filename = await readlineAsync(filenameQuery);
   }
 
   if (filename?.endsWith(".md")) {

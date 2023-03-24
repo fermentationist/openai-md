@@ -1,11 +1,11 @@
 # (required) API key needed to generate content using the OpenAI API
-OPENAI_API_KEY = 
+OPENAI_API_KEY= 
 
 # (optional) default author name to use in front matter
-OAIMD_AUTHOR = 
+OAIMD_AUTHOR= 
 
 # (optional) what to name the output directory created in the root folder of the project
-OAIMD_OUTPUT_DIRECTORY = 
+OAIMD_OUTPUT_DIRECTORY= 
 
 # (required for dev ONLY) setting necessary to allow Mocha (test runner) to work with ESModules and TypeScript
 TS_NODE_COMPILER_OPTIONS={"module":"commonjs"}
