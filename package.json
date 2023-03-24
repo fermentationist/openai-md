@@ -1,7 +1,7 @@
 {
   "name": "openai-md",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Node.js (Typescript) package/CLI app that uses the OpenAI API to generate content in the form of markdown files.",
   "main": "lib/index.js",
   "bin": "lib/cli.js",
@@ -16,9 +16,7 @@
     "test": "mocha './test/**/*.test.*'",
     "prepare": "npm run build",
     "prepublishOnly": "npm run lint && npm run test",
-    "preversion": "npm run lint",
-    "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "preversion": "npm run lint"
   },
   "author": {
     "name": "Dennis Hodges",
@@ -39,7 +37,7 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "openai": "^3.2.1",
-    "yargs": "github:yargs/yargs"
+    "yargs": "^17.7.1"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.1",
