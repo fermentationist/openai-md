@@ -1,10 +1,9 @@
 import "dotenv/config";
-import { get } from "http";
 import {
   Configuration,
   CreateModerationResponseResultsInner,
   OpenAIApi,
-  ChatCompletionRequestMessageRoleEnum,
+  ChatCompletionRequestMessageRoleEnum
 } from "openai";
 
 export const DEFAULT_POLICED_CATEGORIES = [
@@ -62,7 +61,9 @@ export async function failsModeration(
   return false;
 }
 
-function getSystemPrompt(frontMatterToGenerate: string[] = []) {
+function getSystemPrompt(
+  frontMatterToGenerate: string[] = []
+) {
   const frontMatterToGenerateCopy = [...frontMatterToGenerate];
   const lastKey = frontMatterToGenerateCopy.pop();
   // if there is only one key, we don't need to use the word "and"
@@ -88,7 +89,7 @@ export async function getCompletion(
     maxTokens,
     model,
     apiKey,
-    frontMatterToGenerate,
+    frontMatterToGenerate
   }: {
     temperature?: number;
     maxTokens?: number;
@@ -114,7 +115,8 @@ export async function getCompletion(
         role: "user" as ChatCompletionRequestMessageRoleEnum,
         content: prompt,
       },
-    ];
+    ]
+    console.log("messages", messages)
     console.log("Getting completion from OpenAI API...");
     const wordCount = prompt.split(/[\s,.-]/).length;
     const estimatedPromptTokens = Math.round(wordCount * 1.5);
@@ -128,9 +130,7 @@ export async function getCompletion(
     });
     console.log("\nGPT model used:", response?.data?.model);
     console.log("Total tokens:", response?.data?.usage?.total_tokens);
-    return (
-      response?.data?.choices && response.data.choices[0]?.message?.content
-    );
+    return response?.data?.choices && response.data.choices[0]?.message?.content;
   } catch (error) {
     console.log("Error getting completion from OpenAI API:");
     console.error(error);
