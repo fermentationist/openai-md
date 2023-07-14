@@ -152,7 +152,7 @@ export async function getCompletion(
   }
 }
 
-export function tokenEstimate (messages: any) {
+export function tokenEstimate(messages: any) {
   const textContent = JSON.stringify(messages)
     .replace(/[\n\r\t]/g, " ")
     .replace(/[[\]{}"]/g, "");
