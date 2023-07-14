@@ -17,6 +17,9 @@ export const DEFAULT_POLICED_CATEGORIES = [
 ];
 
 const DEFAULT_MODEL = "gpt-3.5-turbo-0613";
+const TOKEN_LIMIT = 4096;
+const COMPLETION_TOKEN_MAX = Math.round(TOKEN_LIMIT * 0.5);
+const COMPLETION_TOKEN_MIN = Math.round(TOKEN_LIMIT * 0.25);
 
 // initialize OpenAI API
 let configuration = new Configuration({
@@ -115,14 +118,19 @@ export async function getCompletion(
       },
     ];
     console.log("Getting completion from OpenAI API...");
-    const wordCount = prompt.split(/[\s,.-]/).length;
-    const estimatedPromptTokens = Math.round(wordCount * 1.5);
-    const difference = 2048 - estimatedPromptTokens;
+    const estimatedPromptTokens = tokenEstimate(messages);
+    const difference = TOKEN_LIMIT - estimatedPromptTokens;
+    const tokenMax = Math.min(COMPLETION_TOKEN_MAX, difference);
+    if (tokenMax < COMPLETION_TOKEN_MIN) {
+      throw new Error(
+        `The prompt is too long. Please reduce the length of the prompt.`
+      );
+    }
     performance.mark("start");
     const response = await openai.createChatCompletion({
       model: model ?? DEFAULT_MODEL,
       messages,
-      max_tokens: maxTokens ?? difference,
+      max_tokens: maxTokens ?? tokenMax,
       temperature,
     });
     console.log("\nGPT model used:", response?.data?.model);
@@ -142,4 +150,12 @@ export async function getCompletion(
       "s"
     );
   }
+}
+
+export function tokenEstimate (messages: any) {
+  const textContent = JSON.stringify(messages)
+    .replace(/[\n\r\t]/g, " ")
+    .replace(/[[\]{}"]/g, "");
+  const wordCount = textContent.split(/[\s,.-:]/).length;
+  return Math.ceil(wordCount * 1.25);
 }

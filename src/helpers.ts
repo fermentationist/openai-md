@@ -68,12 +68,12 @@ export function getDateString(dateObj = new Date(), timeZone?: string) {
   if (typeof dateObj === "string") {
     return dateObj;
   }
-  const intlString = new Intl.DateTimeFormat("en-US", {
+  const formattedString = dateObj.toLocaleDateString("en-US", {
     year: "numeric",
-    month: "numeric",
-    day: "numeric",
+    month: "2-digit",
+    day: "2-digit",
     timeZone,
-  }).format(dateObj);
-  const [month, date, year] = intlString.split("/");
-  return `${year}-${month.padStart(2, "0")}-${date.padStart(2, "0")}`;
+  });
+  const [month, date, year] = formattedString.split("/");
+  return `${year}-${month}-${date}`;
 }
