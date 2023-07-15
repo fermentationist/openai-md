@@ -1,7 +1,7 @@
 {
   "name": "openai-md",
   "type": "module",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A Typescript package/Node.js command-line tool that uses the OpenAI GPT-3 API to generate content in the form of markdown files.",
   "main": "lib/index.js",
   "bin": "lib/cli.js",
