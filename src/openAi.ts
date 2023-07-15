@@ -17,9 +17,9 @@ export const DEFAULT_POLICED_CATEGORIES = [
 ];
 
 const DEFAULT_MODEL = "gpt-3.5-turbo-0613";
-const TOKEN_LIMIT = 4096;
-const COMPLETION_TOKEN_MAX = Math.round(TOKEN_LIMIT * 0.5);
-const COMPLETION_TOKEN_MIN = Math.round(TOKEN_LIMIT * 0.25);
+const DEFAULT_TOKEN_LIMIT = 4096;
+const DEFAULT_COMPLETION_TOKEN_MAX = Math.round(DEFAULT_TOKEN_LIMIT * 0.5);
+const DEFAULT_COMPLETION_TOKEN_MIN = Math.round(DEFAULT_TOKEN_LIMIT * 0.25);
 
 // initialize OpenAI API
 let configuration = new Configuration({
@@ -88,13 +88,19 @@ export async function getCompletion(
   {
     temperature = 0.95,
     maxTokens,
-    model,
+    model = DEFAULT_MODEL,
+    modelTokenLimit = DEFAULT_TOKEN_LIMIT,
+    minCompletionTokens = DEFAULT_COMPLETION_TOKEN_MIN,
+    maxCompletionTokens = DEFAULT_COMPLETION_TOKEN_MAX,
     apiKey,
     frontMatterToGenerate,
   }: {
     temperature?: number;
     maxTokens?: number;
     model?: string;
+    modelTokenLimit?: number;
+    minCompletionTokens?: number;
+    maxCompletionTokens?: number;
     apiKey?: string;
     frontMatterToGenerate?: string[];
   } = {}
@@ -119,9 +125,9 @@ export async function getCompletion(
     ];
     console.log("Getting completion from OpenAI API...");
     const estimatedPromptTokens = tokenEstimate(messages);
-    const difference = TOKEN_LIMIT - estimatedPromptTokens;
-    const tokenMax = Math.min(COMPLETION_TOKEN_MAX, difference);
-    if (tokenMax < COMPLETION_TOKEN_MIN) {
+    const difference = modelTokenLimit - estimatedPromptTokens;
+    const tokenMax = Math.min(maxCompletionTokens, difference);
+    if (tokenMax < minCompletionTokens) {
       throw new Error(
         `The prompt is too long. Please reduce the length of the prompt.`
       );
