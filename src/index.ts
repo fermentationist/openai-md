@@ -80,7 +80,10 @@ export async function generateMarkdownAndSaveToFile(
     filenameKey, // the key in the front matter to use as the filename, defaults to "title",
     filename, // the filename to use, defaults to the value of filenameKey
     maxTokens, // the maximum number of tokens to generate, defaults to the difference between the maximum allowed (2048) and the estimated number of tokens in the prompt
-    model, // the model to use, defaults to "davinci"
+    model, // the model to use, defaults to "gpt-3.5-turbo-0613"
+    modelTokenLimit, // the maximum number of tokens allowed for the model, defaults to 4096
+    minCompletionTokens, // the minimum number of tokens to generate, defaults to 1028
+    maxCompletionTokens, // the maximum number of tokens to generate, defaults to 2048
     apiKey, // the OpenAI API key to use, can also be set using the OPENAI_API_KEY environment variable
   }: {
     temperature?: number;
@@ -91,6 +94,9 @@ export async function generateMarkdownAndSaveToFile(
     filename?: string;
     maxTokens?: number;
     model?: string;
+    modelTokenLimit?: number;
+    minCompletionTokens?: number;
+    maxCompletionTokens?: number;
     apiKey?: string;
   } = {}
 ) {
