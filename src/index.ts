@@ -32,7 +32,6 @@ export async function generateMarkdown(
     meta = {},
     temperature = 0.95,
     frontMatterToGenerate = [],
-    maxTokens,
     model,
     modelTokenLimit,
     minCompletionTokens,
@@ -42,7 +41,6 @@ export async function generateMarkdown(
     meta?: Record<string, string>;
     temperature?: number;
     frontMatterToGenerate?: string[];
-    maxTokens?: number;
     model?: string;
     modelTokenLimit?: number;
     minCompletionTokens?: number;
@@ -52,7 +50,6 @@ export async function generateMarkdown(
 ) {
   const content = await getMarkdownContent(userPrompt, {
     temperature,
-    maxTokens,
     model,
     modelTokenLimit,
     minCompletionTokens,
@@ -79,7 +76,6 @@ export async function generateMarkdownAndSaveToFile(
     outputDirectory, // the directory to save the file to, defaults to "temp"
     filenameKey, // the key in the front matter to use as the filename, defaults to "title",
     filename, // the filename to use, defaults to the value of filenameKey
-    maxTokens, // the maximum number of tokens to generate, defaults to the difference between the maximum allowed (2048) and the estimated number of tokens in the prompt
     model, // the model to use, defaults to "gpt-3.5-turbo-0613"
     modelTokenLimit, // the maximum number of tokens allowed for the model, defaults to 4096
     minCompletionTokens, // the minimum number of tokens to generate, defaults to 1028
@@ -92,7 +88,6 @@ export async function generateMarkdownAndSaveToFile(
     outputDirectory?: string;
     filenameKey?: string;
     filename?: string;
-    maxTokens?: number;
     model?: string;
     modelTokenLimit?: number;
     minCompletionTokens?: number;
@@ -104,7 +99,6 @@ export async function generateMarkdownAndSaveToFile(
     meta,
     temperature,
     frontMatterToGenerate,
-    maxTokens,
     model,
     apiKey,
   });
@@ -123,7 +117,6 @@ async function getMarkdownContent(
   prompt: string,
   {
     temperature,
-    maxTokens,
     model,
     modelTokenLimit,
     minCompletionTokens,
@@ -132,7 +125,6 @@ async function getMarkdownContent(
     frontMatterToGenerate,
   }: {
     temperature?: number;
-    maxTokens?: number;
     model?: string;
     modelTokenLimit?: number;
     minCompletionTokens?: number;
@@ -145,7 +137,6 @@ async function getMarkdownContent(
   spinner.start();
   const completion = await openAi.getCompletion(prompt, {
     temperature,
-    maxTokens,
     model,
     modelTokenLimit,
     minCompletionTokens,

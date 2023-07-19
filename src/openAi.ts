@@ -87,7 +87,6 @@ export async function getCompletion(
   prompt: string,
   {
     temperature = 0.95,
-    maxTokens,
     model = DEFAULT_MODEL,
     modelTokenLimit = DEFAULT_TOKEN_LIMIT,
     minCompletionTokens = DEFAULT_COMPLETION_TOKEN_MIN,
@@ -96,7 +95,6 @@ export async function getCompletion(
     frontMatterToGenerate,
   }: {
     temperature?: number;
-    maxTokens?: number;
     model?: string;
     modelTokenLimit?: number;
     minCompletionTokens?: number;
@@ -136,7 +134,7 @@ export async function getCompletion(
     const response = await openai.createChatCompletion({
       model: model ?? DEFAULT_MODEL,
       messages,
-      max_tokens: maxTokens ?? tokenMax,
+      max_tokens: tokenMax,
       temperature,
     });
     console.log("\nGPT model used:", response?.data?.model);
